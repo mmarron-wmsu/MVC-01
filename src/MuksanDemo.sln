@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.30501.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MuksanDemo", "MuksanDemo\MuksanDemo.csproj", "{1CF0DAF6-417D-4D2C-ADF5-F7721F29C070}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MuksanDemo.Dal", "MuksanDemo.Dal\MuksanDemo.Dal.csproj", "{915F6FE0-AE3C-48DF-B281-85F1C94E46FB}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{1CF0DAF6-417D-4D2C-ADF5-F7721F29C070}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1CF0DAF6-417D-4D2C-ADF5-F7721F29C070}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1CF0DAF6-417D-4D2C-ADF5-F7721F29C070}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1CF0DAF6-417D-4D2C-ADF5-F7721F29C070}.Release|Any CPU.Build.0 = Release|Any CPU
+		{915F6FE0-AE3C-48DF-B281-85F1C94E46FB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{915F6FE0-AE3C-48DF-B281-85F1C94E46FB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{915F6FE0-AE3C-48DF-B281-85F1C94E46FB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{915F6FE0-AE3C-48DF-B281-85F1C94E46FB}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

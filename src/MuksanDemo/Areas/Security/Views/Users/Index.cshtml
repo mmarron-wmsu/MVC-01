@@ -1,0 +1,73 @@
+﻿@model IEnumerable<MuksanDemo.Areas.Security.Models.UserViewModel>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="form-horizontal">
+    <header class="row content-header">
+        <div class="col-md-6">
+            <h2>Users</h2>
+        </div>
+        <div class="col-md-6 content-action text-right">
+
+            <a href="@Url.Action("Create")" class="btn btn-success">
+                <span class="glyphicon glyphicon-plus"></span>Create
+
+            </a>
+        </div>
+
+    </header>
+    <table class="table">
+        <tr>
+            <th>
+                First Name
+            </th>
+            <th>
+                Last Name
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Gender)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Age)
+            </th>
+            <th>
+                Actions
+            </th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FirstName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.LastName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Gender)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Age)
+                </td>
+                <td>
+                    <a href="@Url.Action("Edit", new { id = item.Id })" class="btn btn-link">
+                        <span class="glyphicon glyphicon-remove"></span>Edit
+
+                    </a>
+                    <a href="@Url.Action("Details", new { id = item.Id })" class="btn btn-link">
+                        <span ></span>Details
+
+                    </a>
+                    <a href="@Url.Action("Delete", new { id = item.Id })" class="text-danger">
+                        <span class="glyphicon glyphicon-trash"></span>Delete
+
+                    </a>
+                </td>
+            </tr>
+        }
+
+    </table>
+</div>

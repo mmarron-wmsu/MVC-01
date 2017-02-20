@@ -1,0 +1,36 @@
+﻿@model MuksanDemo.Areas.Security.Models.UserViewModel
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>User Details</h2>
+
+
+<div>
+    
+ 
+    <hr />
+    <dl class="dl-horizontal">
+        <dd>
+            @Html.DisplayFor(model => model.FirstName)
+        </dd>
+        <dd>
+            @Html.DisplayFor(model => model.LastName)
+        </dd>
+        <dd>
+            @Html.DisplayFor(model => model.Gender)
+        </dd>
+        <dd>
+            @Html.DisplayFor(model => model.Age)
+        </dd>
+    </dl>
+</div>
+<p>
+    <a href="@Url.Action("Index")" class="btn btn-link">
+        <span class="glyphicon glyphicon-remove"></span>Cancel
+
+    </a>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) 
+</p>
