@@ -1,0 +1,55 @@
+﻿@model IEnumerable<dudungcharing.Areas.security.Models.UserModel>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Firstname)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Lastname)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Age)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model)
+{
+    <tr id="optionBtn">
+        <td id="option1">        
+               @Html.DisplayFor(modelItem => item.Firstname)
+           
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Lastname)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Age)
+        </td>
+        <td id="s1">
+            <button class="btn btn-success">
+                @Html.ActionLink("Edit", "Edit", new { id = item.id }) |
+             </button>
+            <button class="btn btn-primary">
+                @Html.ActionLink("Details", "Details", new { id = item.id }) |
+            </button>
+            <button class="btn btn-default">
+                @Html.ActionLink("Delete", "Delete", new { id = item.id }) |
+            </button>
+           
+        </td>
+    </tr>
+}
+
+</table>
