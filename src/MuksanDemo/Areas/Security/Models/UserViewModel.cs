@@ -8,7 +8,7 @@ namespace MuksanDemo.Areas.Security.Models
 {
     public class UserViewModel
     {
-        public Guid Id { get; set; }
+        public int Id { get; set; }
 
         [Required]
         [MinLength(4, ErrorMessage = "Minimum of 4 Letters only!")]
@@ -24,5 +24,6 @@ namespace MuksanDemo.Areas.Security.Models
 
        
         public int? Age { get; set; }
+        public DateTime? EmploymentDate { get; set; }
     }
 }

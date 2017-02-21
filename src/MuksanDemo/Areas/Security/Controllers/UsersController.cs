@@ -10,36 +10,10 @@ namespace MuksanDemo.Areas.Security.Controllers
 {
     public class UsersController : Controller
     {
-        private IList<UserViewModel> Users
-        {
-            get
-            {
-                if (Session["data"] == null)
-                {
-                    Session["data"] = new List<UserViewModel>(){
-                        new UserViewModel {
-                             Id = Guid.NewGuid(),
-                             FirstName = "Lance",
-                             Gender = "Male",
-                             LastName = "Selot",
-                             Age = 21
-                        },
-                        new UserViewModel {
-                             Id = Guid.NewGuid(),
-                             FirstName = "Lance",
-                             Gender = "Female",
-                             LastName = "Oscar",
-                             Age = 59
-                        }
-                    };
-                }
-                return Session["data"] as List<UserViewModel>;
-            }
-        }
-        // GET: Security/Users
+        // GET: security/Users
         public ActionResult Index()
         {
-            using(var db = new DatabaseContext())
+            using (var db = new DatabaseContext())
             {
                 var users = (from user in db.Users
                              select new UserViewModel
@@ -47,61 +21,60 @@ namespace MuksanDemo.Areas.Security.Controllers
                                  Id = user.Id,
                                  FirstName = user.FirstName,
                                  LastName = user.LastName,
+                                 Age = user.Age,
                                  Gender = user.Gender,
-                                 Age = user.Age
+                                 EmploymentDate = user.EmploymentDate
                              }).ToList();
                 return View(users);
-
             }
-                    
+
         }
 
-        // GET: Security/Users/Details/5
-        public ActionResult Details(Guid id)
+        // GET: security/Users/Details/5
+        public ActionResult Details(int id)
         {
-            var m = Users.FirstOrDefault(user => user.Id == id);
-            return View(m);
+            using (var db = new DatabaseContext())
+            {
+                var user = db.Users.FirstOrDefault(u => u.Id == id);
+                UserViewModel viewModel = new UserViewModel()
+                {
+                    Id = user.Id,
+                    FirstName = user.FirstName,
+                    LastName = user.LastName,
+                    Age = user.Age,
+                    Gender = user.Gender,
+                    EmploymentDate = user.EmploymentDate
+                };
+                return View(viewModel);
+            }
         }
 
-        // GET: Security/Users/Create
+        // GET: security/Users/Create
         public ActionResult Create()
         {
-            ViewBag.Gender = new List<SelectListItem>{
-            {
-                new SelectListItem
-                {
-                    Value ="Male",
-                    Text = "Male"
-                }
-            },
-            new SelectListItem
-                {
-                    Value = "Female",
-                    Text = "Female"
-                }
-            
-            };
-             return View();
+            return View();
         }
 
-
-        // POST: Security/Users/Create
+        // POST: security/Users/Create
         [HttpPost]
         public ActionResult Create(UserViewModel viewModel)
         {
+            if (ModelState.IsValid == false)
+            {
+                return View();
+            }
             try
             {
-                if (ModelState.IsValid == false)
-                    return View();
                 using (var db = new DatabaseContext())
                 {
                     db.Users.Add(new User
                     {
-                        Id = Guid.NewGuid(),
+                        //Id = int.NewGuid(),
                         FirstName = viewModel.FirstName,
-                        Gender = viewModel.Gender,
                         LastName = viewModel.LastName,
-                        Age = viewModel.Age
+                        Age = viewModel.Age,
+                        Gender = viewModel.Gender,
+                        EmploymentDate = viewModel.EmploymentDate
                     });
                     db.SaveChanges();
                 }
@@ -113,28 +86,41 @@ namespace MuksanDemo.Areas.Security.Controllers
             }
         }
 
-        // GET: Security/Users/Edit/5
-        public ActionResult Edit(Guid Id)
+        // GET: security/Users/Edit/5
+        public ActionResult Edit(int id)
         {
-            var e = Users.FirstOrDefault(user => user.Id == Id);
-            return View(e);
+            using (var db = new DatabaseContext())
+            {
+                var user = db.Users.FirstOrDefault(u => u.Id == id);
+                UserViewModel viewModel = new UserViewModel()
+                {
+                    Id = user.Id,
+                    FirstName = user.FirstName,
+                    LastName = user.LastName,
+                    Age = user.Age,
+                    Gender = user.Gender,
+                    EmploymentDate = user.EmploymentDate
+                };
+                return View(viewModel);
+            }
         }
 
-        // POST: Security/Users/Edit/5
+        // POST: security/Users/Edit/5
         [HttpPost]
-        public ActionResult Edit(Guid Id, UserViewModel usermodel)
+        public ActionResult Edit(int id, UserViewModel viewModel)
         {
             try
             {
-                // TODO: Add update logic here
-              var e = Users.FirstOrDefault(user => user.Id == Id);
-
-              e.FirstName = usermodel.FirstName;
-              e.LastName = usermodel.LastName;
-              e.Gender = usermodel.Gender;
-              e.Age = usermodel.Age;
-
-               
+                using (var db = new DatabaseContext())
+                {
+                    var user = db.Users.FirstOrDefault(u => u.Id == id);
+                    user.FirstName = viewModel.FirstName;
+                    user.LastName = viewModel.LastName;
+                    user.Age = viewModel.Age;
+                    user.Gender = viewModel.Gender;
+                    //EmploymentDate = viewModel.EmploymentDate;
+                    db.SaveChanges();
+                }
                 return RedirectToAction("Index");
             }
             catch
@@ -143,22 +129,38 @@ namespace MuksanDemo.Areas.Security.Controllers
             }
         }
 
-        // GET: Security/Users/Delete/5
-        public ActionResult Delete(Guid id)
+        // GET: security/Users/Delete/5
+        public ActionResult Delete(int id)
         {
-            var u = Users.FirstOrDefault(user => user.Id == id);
-            return View(u);
+            using (var db = new DatabaseContext())
+            {
+                var user = db.Users.FirstOrDefault(u => u.Id == id);
+                UserViewModel viewModel = new UserViewModel()
+                {
+                    Id = user.Id,
+                    FirstName = user.FirstName,
+                    LastName = user.LastName,
+                    Age = user.Age,
+                    Gender = user.Gender,
+                    EmploymentDate = user.EmploymentDate
+                };
+                return View(viewModel);
+            }
         }
 
-        // POST: Security/Users/Delete/5
+        // POST: security/Users/Delete/5
         [HttpPost]
-        public ActionResult Delete(Guid id, FormCollection collection)
+        public ActionResult Delete(int id, FormCollection collection)
         {
             try
             {
-                // TODO: Add delete logic here
-                var u = Users.FirstOrDefault(user => user.Id == id);
-                Users.Remove(u);
+                using (var db = new DatabaseContext())
+                {
+                    var user = db.Users.FirstOrDefault(u => u.Id == id);
+                    db.Users.Remove(user);
+                    db.SaveChanges();
+                }
+
                 return RedirectToAction("Index");
             }
             catch
@@ -166,5 +168,7 @@ namespace MuksanDemo.Areas.Security.Controllers
                 return View();
             }
         }
+
+        public int? EmploymentDate { get; set; }
     }
 }

@@ -10,10 +10,11 @@ namespace MuksanDemo.Dal
     public class User
     {
         [Key]
-        public Guid Id { get; set; }
+        public int Id { get; set; }
         public String FirstName { get; set; }
         public String LastName { get; set; }
         public String Gender { get; set; }
         public int? Age { get; set; }
+        public DateTime? EmploymentDate { get; set; }
     }
 }
