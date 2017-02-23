@@ -24,5 +24,6 @@ namespace MuksanDemo.Areas.Security.Models
 
        
         public int? Age { get; set; }
+        public DateTime? EmploymentDate { get; set; }
     }
 }
