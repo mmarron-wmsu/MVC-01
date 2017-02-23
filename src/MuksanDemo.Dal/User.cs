@@ -5,15 +5,23 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MuksanDemo.Dal
+namespace Mydudungcharing.dal
 {
     public class User
     {
+        public User()
+        {
+            Educations = new List<Education>();
+        }
+
         [Key]
-        public Guid Id { get; set; }
-        public String FirstName { get; set; }
-        public String LastName { get; set; }
-        public String Gender { get; set; }
+        public int Id { get; set; }
+        public String Firstname { get; set; }
+        public String Lastname { get; set; }
         public int? Age { get; set; }
+        public string Gender { get; set; }
+        public DateTime? EmploymentDate { get; set; }
+
+        public ICollection<Education> Educations { get; set; }
     }
 }
