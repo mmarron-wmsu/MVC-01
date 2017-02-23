@@ -1,5 +1,6 @@
 ﻿using MuksanDemo.Areas.Security.Models;
 using MuksanDemo.Dal;
+using Mydudungcharing.dal;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -45,8 +46,8 @@ namespace MuksanDemo.Areas.Security.Controllers
                              select new UserViewModel
                              {
                                  Id = user.Id,
-                                 FirstName = user.FirstName,
-                                 LastName = user.LastName,
+                                 FirstName = user.Firstname,
+                                 LastName = user.Lastname,
                                  Gender = user.Gender,
                                  Age = user.Age
                              }).ToList();
@@ -59,8 +60,20 @@ namespace MuksanDemo.Areas.Security.Controllers
         // GET: Security/Users/Details/5
         public ActionResult Details(int id)
         {
-            var m = Users.FirstOrDefault(user => user.Id == id);
-            return View(m);
+            using (var db = new DatabaseContext())
+            {
+                var users = (from user in db.Users
+                             where user.Id == id
+                             select new UserViewModel
+            {
+                Id = user.Id,
+                FirstName = user.Firstname,
+                Gender = user.Gender,
+                LastName = user.Lastname,
+                Age = user.Age
+            }).FirstOrDefault();
+                return View(users);
+            }
         }
 
         // GET: Security/Users/Create
@@ -95,12 +108,12 @@ namespace MuksanDemo.Areas.Security.Controllers
                     return View();
                 using (var db = new DatabaseContext())
                 {
-                    db.Users.Add(new User
+                    db.Users.Add(new User 
                     {
                         //ID = Guid.NewGuid(),
-                        FirstName = viewModel.FirstName,
+                        Firstname = viewModel.FirstName,
                         Gender = viewModel.Gender,
-                        LastName = viewModel.LastName,
+                        Lastname = viewModel.LastName,
                         Age = viewModel.Age
                     });
                     db.SaveChanges();
@@ -110,30 +123,52 @@ namespace MuksanDemo.Areas.Security.Controllers
             catch
             {
                 return View();
+                
             }
         }
 
         // GET: Security/Users/Edit/5
-        public ActionResult Edit(int Id)
+        public ActionResult Edit(int id)
         {
-            var m = Users.FirstOrDefault(user => user.Id == Id);
-            return View(m);
+            using (var db = new DatabaseContext())
+            {
+                var users = (from user in db.Users
+                             where user.Id == id
+                             select new UserViewModel
+                             {
+                                 Id = user.Id,
+                                 FirstName = user.Firstname,
+                                 Gender = user.Gender,
+                                 LastName = user.Lastname,
+                                 Age = user.Age
+                             }).FirstOrDefault();
+                return View(users);
+            }
         }
 
         // POST: Security/Users/Edit/5
         [HttpPost]
-        public ActionResult Edit(int Id, UserViewModel usermodel)
+        public ActionResult Edit(int id, UserViewModel viewModel)
         {
             try
             {
                 // TODO: Add update logic here
-              var e = Users.FirstOrDefault(user => user.Id
-                  == Id);
+             if (ModelState.IsValid == false)
+                    return View();
+                using (var db = new DatabaseContext())
+                {
+                    var users = (from user in db.Users
+                                 where user.Id == id
+                                 select user).FirstOrDefault();
+               
+                       //ID = Guid.NewGuid(),
+                        users.Firstname = viewModel.FirstName;
+                        users.Gender = viewModel.Gender;
+                        users.Lastname = viewModel.LastName;
+                        users.Age = viewModel.Age;
 
-              e.FirstName = usermodel.FirstName;
-              e.LastName = usermodel.LastName;
-              e.Gender = usermodel.Gender;
-              e.Age = usermodel.Age;
+                    db.SaveChanges();
+                }
                 return RedirectToAction("Index");
             }
             catch
@@ -151,9 +186,9 @@ namespace MuksanDemo.Areas.Security.Controllers
                                  select new UserViewModel
                 {
                     Id = user.Id,
-                    FirstName = user.FirstName,
+                    FirstName = user.Firstname,
                     Gender = user.Gender,
-                    LastName = user.LastName,
+                    LastName = user.Lastname,
                     Age = user.Age
                 }).FirstOrDefault();
                 return View(users);
@@ -184,5 +219,6 @@ namespace MuksanDemo.Areas.Security.Controllers
             //    return View();
             //}
         }
+
     }
 }
